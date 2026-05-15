@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reign & Ruin ✦ Magical Girl Pomodoro</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Reign%20%26%20Ruin%22%2C%22short_name%22%3A%22Reign%20%26%20Ruin%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2304000d%22%2C%22theme_color%22%3A%22%23ff2d78%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22icon-192.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22icon-512.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+
+    <!-- Social Share Metadata -->
+    <meta property="og:title" content="Reign & Ruin — Magical Girl Pomodoro Timer">
+    <meta property="og:description" content="Focus. Transform. Devastate. A pomodoro timer where you power up a magical girl through 5 stages, then destroy a city during your break. Collect dresses, customize your look, and build your streak.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://placehold.co/1200x630/04000d/ff2d78?text=Reign+%26+Ruin">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Reign & Ruin — Magical Girl Pomodoro Timer">
+    <meta name="twitter:description" content="Focus. Transform. Devastate. Power up a magical girl, then destroy a city.">
+    <meta name="twitter:image" content="https://placehold.co/1200x630/04000d/ff2d78?text=Reign+%26+Ruin">
+
+    <!-- iOS Web App Meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Reign & Ruin">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2304000d'/><text x='50' y='65' text-anchor='middle' font-size='50'>🌙</text></svg>">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#04000d">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap');
 
@@ -38,6 +63,7 @@
             user-select:none; -webkit-user-select:none;
             -webkit-tap-highlight-color:transparent;
             padding:12px 0 24px;
+            overscroll-behavior: none;
         }
 
         .starfield{ position:fixed; inset:0; pointer-events:none; z-index:0; }
@@ -210,6 +236,11 @@
 
         .sflash{ position:fixed; inset:0; pointer-events:none; z-index:999; animation:sflash-out 0.35s forwards; }
         @keyframes sflash-out{ from{opacity:1;}to{opacity:0;} }
+
+        .support-wrap { position: relative; z-index: 10; margin-top: 4px; }
+        .support-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Press Start 2P', monospace; font-size: 0.38rem; letter-spacing: 0.1em; line-height: 1.6; color: var(--dim); text-decoration: none; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; transition: all 0.3s; }
+        .support-link:hover { border-color: var(--pink); color: var(--pink); box-shadow: 0 0 16px rgba(255,45,120,0.2); }
+        .support-link .coffee-icon { font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -264,6 +295,11 @@
         <button class="btn btn-customize" id="btnCustomize">🎨 LOOKS</button>
         <button class="btn btn-reset" id="btnReset">↩ RESET</button>
     </div>
+    <div class="support-wrap">
+        <a class="support-link" href="https://ko-fi.com/YOUR_USERNAME" target="_blank" rel="noopener">
+            <span class="coffee-icon">☕</span> Support on Ko-fi
+        </a>
+    </div>
 </div>
 <script>
 (function(){
@@ -315,7 +351,7 @@ function applySettings(){var nf=parseInt(document.getElementById('focusMin').val
 var sf=document.getElementById('starfield');for(var i=0;i<110;i++){var s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';var sz=Math.random()*2+0.8;s.style.width=sz+'px';s.style.height=sz+'px';s.style.setProperty('--d',(Math.random()*3+2)+'s');s.style.setProperty('--delay',Math.random()*4+'s');sf.appendChild(s);}
 function buildStageCards(){var row=document.getElementById('stagesRow');row.innerHTML='';STAGE_NAMES.forEach(function(name,i){var d=document.createElement('div');d.className='st-card'+(i===0?' lit now':'');d.id='stcard-'+i;d.innerHTML='<div class="st-icon">'+STAGE_ICONS[i]+'</div><div class="st-name">'+name.replace(' ','<br>')+'</div><div class="st-bar-w"><div class="st-bar" id="stbar-'+i+'"></div></div>';row.appendChild(d);});}
 
-var timeLeft=FOCUS_SEC,isRunning=false,isBreak=false,intervalId=null,curStage=0,score=0,rampageActive=false;
+var timeLeft=FOCUS_SEC,isRunning=false,isBreak=false,intervalId=null,timerEndTime=null,curStage=0,score=0,rampageActive=false;
 var buildings=[],totalDestroyed=0,specialCharge=0,starPowerActive=false,starPowerLeft=0,starInterval=null;
 var comboCount=0,comboTimer=null,scrollSpeed=0.5,scrollFrame=null,nextSpawnX=0,lastScrollTs=0,SCROLL_MS=16;
 var $scene=document.getElementById('scene'),$cityLayer=document.getElementById('cityLayer'),$groundStrip=document.getElementById('groundStrip'),$rampMoon=document.getElementById('rampageMoon');
@@ -363,12 +399,35 @@ function updateSpecialMeter(){$specialFill.style.width=specialCharge+'%';if(spec
 function supremeAnnihilation(){if(specialCharge<100)return;specialCharge=0;updateSpecialMeter();var W=$scene.clientWidth,H=$scene.clientHeight;for(var i=0;i<6;i++){(function(j){setTimeout(function(){createExplosion(60+Math.random()*(W-120),50+Math.random()*(H-160),100+Math.random()*50,true);},j*130);})(i);}setTimeout(function(){createExplosion(W/2,H/2,200,true);},520);flash('rgba(255,215,0,0.3)');$phase.textContent='💎 SUPREME ANNIHILATION! 💎';earnCrystals(25);}
 function onSceneClick(e){if(!rampageActive)return;var rect=$scene.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;var radius=starPowerActive?120+Math.random()*40:80+Math.random()*40;createExplosion(x,y,radius,false);}
 function startStarPower(stage){var dur=STAR_DUR[Math.min(stage,4)];starPowerLeft=dur;starPowerActive=dur>0;$spWrap.style.display=dur>0?'block':'none';if(!starPowerActive)return;$scene.classList.add('star-active');$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$spFill.style.background='linear-gradient(90deg,var(--gold),var(--rose),var(--lav))';if(dur===99999){$spLabel.textContent='∞ ETERNAL';$spFill.style.width='100%';return;}$spLabel.textContent=dur+'s';$spFill.style.width='100%';clearInterval(starInterval);starInterval=setInterval(function(){starPowerLeft--;$spFill.style.width=Math.max(0,(starPowerLeft/dur)*100)+'%';$spLabel.textContent=starPowerLeft+'s';if(starPowerLeft<=0){starPowerActive=false;clearInterval(starInterval);$scene.classList.remove('star-active');$spLabel.textContent='EXPIRED';$spFill.style.background='rgba(255,255,255,0.15)';$phase.textContent='💥 DESTROY THE CITY! 💥';}},1000);}
-function tick(){if(timeLeft>0){timeLeft--;updateTimerDisplay();updateMeter();if(!isBreak){var prog=(FOCUS_SEC-timeLeft)/FOCUS_SEC,newStage=0;STAGE_THRESH.forEach(function(t,i){if(prog>=t)newStage=i;});if(newStage!==curStage){curStage=newStage;renderPrincess(curStage,false);updateBanner(curStage);doTransformBurst();}updateStageCards(curStage,prog);}}else{clearInterval(intervalId);isRunning=false;if(!isBreak){curStage=4;renderPrincess(curStage,false);updateBanner(curStage);updateStageCards(curStage,1);$phase.textContent='🌟 POWER AT MAXIMUM — UNLEASH! 🌟';$meterText.textContent='💖 FULL POWER ACHIEVED!';$btnRamp.classList.remove('hidden');$btnHen.classList.add('hidden');awardFocusCrystals();var sr=$scene.getBoundingClientRect();for(var i=0;i<22;i++){(function(j){setTimeout(function(){addSparkle(sr.width/2,sr.height*0.45,['🌟','💖','✨','🎀','💕','⭐'][j%6]);},j*45);})(i);}}else{endRampage();}updateTimerDisplay();updateMeter();}}
-function _teardownRampage(){clearInterval(starInterval);starPowerActive=false;stopScrollLoop();$scene.removeEventListener('click',onSceneClick);clearCity();if(comboTimer)clearTimeout(comboTimer);comboCount=0;scrollSpeed=0.5;nextSpawnX=0;lastScrollTs=0;}
-function startFocus(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=false;curStage=0;if(timeLeft===0||timeLeft===BREAK_SEC)timeLeft=FOCUS_SEC;$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$btnHen.classList.add('hidden');$btnRamp.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateTimerDisplay();updateMeter();updateStageCards(0,0);intervalId=setInterval(tick,1000);}
-function startRampage(){rampageActive=true;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=true;timeLeft=BREAK_SEC;score=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$btnRamp.classList.add('hidden');$btnHen.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialReady.classList.remove('show');$meterWrap.style.display='none';$stagesWrap.style.display='none';$specialWrap.style.display='block';$specialFill.style.width='0%';$scene.classList.add('rampage-mode');$mc.style.opacity='0.1';$pWrap.style.display='none';$kaijuWrap.classList.add('show');$groundStrip.style.display='block';$rampMoon.style.display='block';renderKaiju(curStage);spawnInitialCity();startScrollLoop();$scene.addEventListener('click',onSceneClick);startStarPower(curStage);updateTimerDisplay();updateMeter();$destInfo.textContent='🏙️ Speed: 0.5x | Destroyed: 0';intervalId=setInterval(tick,1000);setTimeout(function(){var W=$scene.clientWidth,H=$scene.clientHeight;createExplosion(W*0.3,H*0.6,100,false);createExplosion(W*0.7,H*0.5,90,false);},500);}
+
+// ══════════════ BACKGROUND-SAFE TICK ══════════════
+function tick(){
+    if(!timerEndTime) return;
+    var now=Date.now();
+    var remaining=Math.max(0,Math.ceil((timerEndTime-now)/1000));
+    if(remaining!==timeLeft){
+        timeLeft=remaining;
+        updateTimerDisplay();
+        updateMeter();
+        if(!isBreak&&timeLeft>0){
+            var prog=(FOCUS_SEC-timeLeft)/FOCUS_SEC,newStage=0;
+            STAGE_THRESH.forEach(function(t,i){if(prog>=t)newStage=i;});
+            if(newStage!==curStage){curStage=newStage;renderPrincess(curStage,false);updateBanner(curStage);doTransformBurst();}
+            updateStageCards(curStage,prog);
+        }
+    }
+    if(timeLeft<=0){
+        clearInterval(intervalId);timerEndTime=null;isRunning=false;
+        if(!isBreak){curStage=4;renderPrincess(curStage,false);updateBanner(curStage);updateStageCards(curStage,1);$phase.textContent='🌟 POWER AT MAXIMUM — UNLEASH! 🌟';$meterText.textContent='💖 FULL POWER ACHIEVED!';$btnRamp.classList.remove('hidden');$btnHen.classList.add('hidden');awardFocusCrystals();var sr=$scene.getBoundingClientRect();for(var i=0;i<22;i++){(function(j){setTimeout(function(){addSparkle(sr.width/2,sr.height*0.45,['🌟','💖','✨','🎀','💕','⭐'][j%6]);},j*45);})(i);}}else{endRampage();}
+        updateTimerDisplay();updateMeter();
+    }
+}
+
+function _teardownRampage(){clearInterval(starInterval);starPowerActive=false;stopScrollLoop();$scene.removeEventListener('click',onSceneClick);clearCity();if(comboTimer)clearTimeout(comboTimer);comboCount=0;scrollSpeed=0.5;nextSpawnX=0;lastScrollTs=0;timerEndTime=null;}
+function startFocus(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=false;curStage=0;timeLeft=FOCUS_SEC;timerEndTime=Date.now()+(timeLeft*1000);$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$btnHen.classList.add('hidden');$btnRamp.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateTimerDisplay();updateMeter();updateStageCards(0,0);intervalId=setInterval(tick,250);}
+function startRampage(){rampageActive=true;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=true;timeLeft=BREAK_SEC;timerEndTime=Date.now()+(timeLeft*1000);score=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$btnRamp.classList.add('hidden');$btnHen.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialReady.classList.remove('show');$meterWrap.style.display='none';$stagesWrap.style.display='none';$specialWrap.style.display='block';$specialFill.style.width='0%';$scene.classList.add('rampage-mode');$mc.style.opacity='0.1';$pWrap.style.display='none';$kaijuWrap.classList.add('show');$groundStrip.style.display='block';$rampMoon.style.display='block';renderKaiju(curStage);spawnInitialCity();startScrollLoop();$scene.addEventListener('click',onSceneClick);startStarPower(curStage);updateTimerDisplay();updateMeter();$destInfo.textContent='🏙️ Speed: 0.5x | Destroyed: 0';intervalId=setInterval(tick,250);setTimeout(function(){var W=$scene.clientWidth,H=$scene.clientHeight;createExplosion(W*0.3,H*0.6,100,false);createExplosion(W*0.7,H*0.5,90,false);},500);}
 function endRampage(){rampageActive=false;_teardownRampage();$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$specialFill.style.width='0%';$specialReady.classList.remove('show');$btnSpecial.classList.add('hidden');specialCharge=0;$comboText.textContent='';$phase.textContent='🌙 REST COMPLETE — RECHARGE';$meterText.textContent='✨ Beginning transformation...';$destInfo.textContent='🏙️ Town intact';isRunning=false;isBreak=false;timeLeft=FOCUS_SEC;updateTimerDisplay();updateMeter();$btnHen.classList.remove('hidden');$btnRamp.classList.add('hidden');}
-function resetEverything(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunningm=false;isBreak=false;timeLeft=FOCUS_SEC;score=0;curStage=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$specialFill.style.width='0%';$specialReady.classList.remove('show');$btnSpecial.classList.add('hidden');specialCharge=0;$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$meterText.textContent='✨ Beginning transformation...';$btnHen.classList.remove('hidden');$btnRamp.classList.add('hidden');$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateStageCards(0,0);updateTimerDisplay();updateMeter();}
+function resetEverything(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunning=false;isBreak=false;timeLeft=FOCUS_SEC;timerEndTime=null;score=0;curStage=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$specialFill.style.width='0%';$specialReady.classList.remove('show');$btnSpecial.classList.add('hidden');specialCharge=0;$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$meterText.textContent='✨ Beginning transformation...';$btnHen.classList.remove('hidden');$btnRamp.classList.add('hidden');$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateStageCards(0,0);updateTimerDisplay();updateMeter();}
 
 $btnHen.addEventListener('click',startFocus);$btnRamp.addEventListener('click',startRampage);$btnSpecial.addEventListener('click',supremeAnnihilation);
 document.getElementById('btnReset').addEventListener('click',resetEverything);
