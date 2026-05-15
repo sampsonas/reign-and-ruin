@@ -236,11 +236,6 @@
 
         .sflash{ position:fixed; inset:0; pointer-events:none; z-index:999; animation:sflash-out 0.35s forwards; }
         @keyframes sflash-out{ from{opacity:1;}to{opacity:0;} }
-
-        .support-wrap { position: relative; z-index: 10; margin-top: 4px; }
-        .support-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Press Start 2P', monospace; font-size: 0.38rem; letter-spacing: 0.1em; line-height: 1.6; color: var(--dim); text-decoration: none; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; transition: all 0.3s; }
-        .support-link:hover { border-color: var(--pink); color: var(--pink); box-shadow: 0 0 16px rgba(255,45,120,0.2); }
-        .support-link .coffee-icon { font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -248,6 +243,13 @@
 <div class="app">
     <div class="logo-wrap"><div class="logo-main">REIGN<br>&amp; RUIN</div><div class="logo-sub">focus · transform · devastate</div></div>
     <div class="phase-label" id="phaseLabel">🌙 CHARGING LOVE &amp; JUSTICE</div>
+
+    <!-- HENSHIN BUTTON — primary action, above settings -->
+    <div class="btn-row">
+        <button class="btn btn-henshin" id="btnHenshin">✨ HENSHIN!</button>
+        <button class="btn btn-rampage hidden" id="btnRampage">💥 BEGIN RAMPAGE!</button>
+    </div>
+
     <button class="settings-toggle" id="settingsToggle">⚙ Timer Settings</button>
     <div class="current-settings" id="currentSettings">Focus: 25 min | Break: 5 min</div>
     <div class="settings-panel" id="settingsPanel">
@@ -288,17 +290,10 @@
     <div class="destruction-info" id="destructionInfo">🏙️ Town intact</div>
     <div class="combo-text" id="comboText"></div>
     <div class="btn-row">
-        <button class="btn btn-henshin" id="btnHenshin">✨ HENSHIN!</button>
-        <button class="btn btn-rampage hidden" id="btnRampage">💥 BEGIN RAMPAGE!</button>
         <button class="btn btn-special hidden" id="btnSpecial">💎 ANNIHILATE!</button>
         <button class="btn btn-shop" id="btnShop">💎 BOUTIQUE</button>
         <button class="btn btn-customize" id="btnCustomize">🎨 LOOKS</button>
         <button class="btn btn-reset" id="btnReset">↩ RESET</button>
-    </div>
-    <div class="support-wrap">
-        <a class="support-link" href="https://ko-fi.com/YOUR_USERNAME" target="_blank" rel="noopener">
-            <span class="coffee-icon">☕</span> Support on Ko-fi
-        </a>
     </div>
 </div>
 <script>
@@ -399,8 +394,6 @@ function updateSpecialMeter(){$specialFill.style.width=specialCharge+'%';if(spec
 function supremeAnnihilation(){if(specialCharge<100)return;specialCharge=0;updateSpecialMeter();var W=$scene.clientWidth,H=$scene.clientHeight;for(var i=0;i<6;i++){(function(j){setTimeout(function(){createExplosion(60+Math.random()*(W-120),50+Math.random()*(H-160),100+Math.random()*50,true);},j*130);})(i);}setTimeout(function(){createExplosion(W/2,H/2,200,true);},520);flash('rgba(255,215,0,0.3)');$phase.textContent='💎 SUPREME ANNIHILATION! 💎';earnCrystals(25);}
 function onSceneClick(e){if(!rampageActive)return;var rect=$scene.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;var radius=starPowerActive?120+Math.random()*40:80+Math.random()*40;createExplosion(x,y,radius,false);}
 function startStarPower(stage){var dur=STAR_DUR[Math.min(stage,4)];starPowerLeft=dur;starPowerActive=dur>0;$spWrap.style.display=dur>0?'block':'none';if(!starPowerActive)return;$scene.classList.add('star-active');$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$spFill.style.background='linear-gradient(90deg,var(--gold),var(--rose),var(--lav))';if(dur===99999){$spLabel.textContent='∞ ETERNAL';$spFill.style.width='100%';return;}$spLabel.textContent=dur+'s';$spFill.style.width='100%';clearInterval(starInterval);starInterval=setInterval(function(){starPowerLeft--;$spFill.style.width=Math.max(0,(starPowerLeft/dur)*100)+'%';$spLabel.textContent=starPowerLeft+'s';if(starPowerLeft<=0){starPowerActive=false;clearInterval(starInterval);$scene.classList.remove('star-active');$spLabel.textContent='EXPIRED';$spFill.style.background='rgba(255,255,255,0.15)';$phase.textContent='💥 DESTROY THE CITY! 💥';}},1000);}
-
-// ══════════════ BACKGROUND-SAFE TICK ══════════════
 function tick(){
     if(!timerEndTime) return;
     var now=Date.now();
@@ -422,7 +415,6 @@ function tick(){
         updateTimerDisplay();updateMeter();
     }
 }
-
 function _teardownRampage(){clearInterval(starInterval);starPowerActive=false;stopScrollLoop();$scene.removeEventListener('click',onSceneClick);clearCity();if(comboTimer)clearTimeout(comboTimer);comboCount=0;scrollSpeed=0.5;nextSpawnX=0;lastScrollTs=0;timerEndTime=null;}
 function startFocus(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=false;curStage=0;timeLeft=FOCUS_SEC;timerEndTime=Date.now()+(timeLeft*1000);$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$btnHen.classList.add('hidden');$btnRamp.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateTimerDisplay();updateMeter();updateStageCards(0,0);intervalId=setInterval(tick,250);}
 function startRampage(){rampageActive=true;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=true;timeLeft=BREAK_SEC;timerEndTime=Date.now()+(timeLeft*1000);score=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$btnRamp.classList.add('hidden');$btnHen.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialReady.classList.remove('show');$meterWrap.style.display='none';$stagesWrap.style.display='none';$specialWrap.style.display='block';$specialFill.style.width='0%';$scene.classList.add('rampage-mode');$mc.style.opacity='0.1';$pWrap.style.display='none';$kaijuWrap.classList.add('show');$groundStrip.style.display='block';$rampMoon.style.display='block';renderKaiju(curStage);spawnInitialCity();startScrollLoop();$scene.addEventListener('click',onSceneClick);startStarPower(curStage);updateTimerDisplay();updateMeter();$destInfo.textContent='🏙️ Speed: 0.5x | Destroyed: 0';intervalId=setInterval(tick,250);setTimeout(function(){var W=$scene.clientWidth,H=$scene.clientHeight;createExplosion(W*0.3,H*0.6,100,false);createExplosion(W*0.7,H*0.5,90,false);},500);}
