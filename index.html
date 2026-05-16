@@ -10,7 +10,7 @@
 
     <!-- Social Share Metadata -->
     <meta property="og:title" content="Reign & Ruin — Magical Girl Pomodoro Timer">
-    <meta property="og:description" content="Focus. Transform. Devastate. A pomodoro timer where you power up a magical girl through 5 stages, then destroy a city during your break. Collect dresses, customize your look, and build your streak.">
+    <meta property="og:description" content="Focus. Transform. Devastate. A pomodoro timer where you power up a magical girl through 5 stages, then destroy a city during your break.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://placehold.co/1200x630/04000d/ff2d78?text=Reign+%26+Ruin">
     <meta property="og:image:width" content="1200">
@@ -244,7 +244,7 @@
     <div class="logo-wrap"><div class="logo-main">REIGN<br>&amp; RUIN</div><div class="logo-sub">focus · transform · devastate</div></div>
     <div class="phase-label" id="phaseLabel">🌙 CHARGING LOVE &amp; JUSTICE</div>
 
-    <!-- HENSHIN BUTTON — primary action, above settings -->
+    <!-- HENSHIN BUTTON -->
     <div class="btn-row">
         <button class="btn btn-henshin" id="btnHenshin">✨ HENSHIN!</button>
         <button class="btn btn-rampage hidden" id="btnRampage">💥 BEGIN RAMPAGE!</button>
@@ -303,21 +303,40 @@
 var DRESS=[{bodice:'#7a7a7a',bodiceHi:'#9a9a9a',skirt:'#5e5e5e',skirtHi:'#888',skirtShimmer:null,bow:'#aaa',bowHi:'#ccc',collar:'#c0c0c0',boots:'#444',bootsHi:'#555',gloves:null,hair:'#f9d71c',hairShadow:'#c8a800',glow:null},{bodice:'#f472b6',bodiceHi:'#fbcfe8',skirt:'#fce7f3',skirtHi:'#fff0f8',skirtShimmer:null,bow:'#fff',bowHi:'#fff',collar:'#fff',boots:'#e879f9',bootsHi:'#f5d0fe',gloves:null,hair:'#f9d71c',hairShadow:'#c8a800',glow:'rgba(249,168,212,0.35)'},{bodice:'#9333ea',bodiceHi:'#c084fc',skirt:'#e879f9',skirtHi:'#f5d0fe',skirtShimmer:null,bow:'#fde68a',bowHi:'#fef9c3',collar:'#fff',boots:'#7e22ce',bootsHi:'#a855f7',gloves:'#fff',glovesCuff:'#e0e0ff',hair:'#c97fff',hairShadow:'#7e22ce',glow:'rgba(168,85,247,0.4)'},{bodice:'#d97706',bodiceHi:'#fbbf24',skirt:'#fef3c7',skirtHi:'#fffbeb',skirtShimmer:'rgba(255,255,255,0.5)',bow:'#fff',bowHi:'#fffbeb',collar:'#fef9c3',boots:'#92400e',bootsHi:'#b45309',gloves:'#fef3c7',glovesCuff:'#fde68a',hair:'#ffe066',hairShadow:'#d97706',glow:'rgba(251,191,36,0.5)'},{bodice:'#fff',bodiceHi:'#ffd6ec',skirt:'#fff',skirtHi:'#ffd6ec',skirtShimmer:'rgba(255,182,215,0.6)',bow:'#ffd700',bowHi:'#fffacd',collar:'#ffd6ec',boots:'#e0b4d4',bootsHi:'#fff',gloves:'#fff',glovesCuff:'#ffd6ec',hair:'#fff',hairShadow:'#ffd6ec',glow:'rgba(255,255,255,0.65)'},{bodice:'#0a7e8c',bodiceHi:'#4dd0e1',skirt:'#006064',skirtHi:'#00838f',skirtShimmer:'rgba(77,208,225,0.3)',bow:'#80deea',bowHi:'#e0f7fa',collar:'#e0f7fa',boots:'#004d40',bootsHi:'#00897b',gloves:'#006064',glovesCuff:'#00838f',hair:'#2d8a8a',hairShadow:'#006064',glow:'rgba(77,208,225,0.35)'},{bodice:'#8b0000',bodiceHi:'#cc2200',skirt:'#4a0000',skirtHi:'#6b1000',skirtShimmer:'rgba(255,100,0,0.35)',bow:'#ffaa00',bowHi:'#ffe066',collar:'#ffe066',boots:'#3a0000',bootsHi:'#5a0000',gloves:'#4a0000',glovesCuff:'#6b1000',hair:'#cc2200',hairShadow:'#8b0000',glow:'rgba(255,80,0,0.4)'},{bodice:'#2d004d',bodiceHi:'#6b0080',skirt:'#1a0030',skirtHi:'#3a0050',skirtShimmer:'rgba(180,0,220,0.35)',bow:'#bb44ff',bowHi:'#dd88ff',collar:'#dd88ff',boots:'#1a0020',bootsHi:'#2d0030',gloves:'#1a0030',glovesCuff:'#3a0050',hair:'#4a0080',hairShadow:'#2d004d',glow:'rgba(150,0,200,0.4)'},{bodice:'#ffb8c6',bodiceHi:'#ffd6e0',skirt:'#ffeef2',skirtHi:'#ffffff',skirtShimmer:'rgba(255,255,255,0.4)',bow:'#ff477e',bowHi:'#ff85a2',collar:'#fff',boots:'#c44569',bootsHi:'#e8798a',gloves:'#ffeef2',glovesCuff:'#ffd6e0',hair:'#ffb8c6',hairShadow:'#e8909a',glow:'rgba(255,183,197,0.4)'},{bodice:'#0d0030',bodiceHi:'#2d0060',skirt:'#080018',skirtHi:'#1a0030',skirtShimmer:'rgba(200,0,255,0.4)',bow:'#dd88ff',bowHi:'#ffccff',collar:'#ffccff',boots:'#1a0030',bootsHi:'#2d0060',gloves:'#080018',glovesCuff:'#1a0030',hair:'#bb44ff',hairShadow:'#7b00cc',glow:'rgba(180,0,255,0.45)'},{bodice:'#ffb8c6',bodiceHi:'#ffd6e0',skirt:'#ffeef2',skirtHi:'#ffffff',skirtShimmer:'rgba(255,200,210,0.45)',bow:'#ff477e',bowHi:'#ff85a2',collar:'#fff',boots:'#c44569',bootsHi:'#e8798a',gloves:'#ffeef2',glovesCuff:'#ffd6e0',hair:'#ffb8c6',hairShadow:'#e8909a',glow:'rgba(255,183,197,0.4)'},{bodice:'#1a1a4e',bodiceHi:'#2d2d6e',skirt:'#0d0d30',skirtHi:'#3a3a7a',skirtShimmer:'rgba(200,200,255,0.35)',bow:'#c0c0ff',bowHi:'#e0e0ff',collar:'#e0e0ff',boots:'#1a1a3e',bootsHi:'#2d2d5e',gloves:'#1a1a4e',glovesCuff:'#2d2d6e',hair:'#c0c0ff',hairShadow:'#8080cc',glow:'rgba(150,150,255,0.4)'},{bodice:'#2d5a1e',bodiceHi:'#4a8a34',skirt:'#1a3a0d',skirtHi:'#3a6a24',skirtShimmer:'rgba(120,200,80,0.3)',bow:'#8b6914',bowHi:'#c4a035',collar:'#c4a035',boots:'#3a2a0d',bootsHi:'#5a4a1e',gloves:'#2d5a1e',glovesCuff:'#4a8a34',hair:'#5a3a1e',hairShadow:'#3a2010',glow:'rgba(100,160,60,0.35)'}];
 var HAIR_PROGRESSIONS={starlight:[{main:'#f9d71c',shadow:'#c8a800'},{main:'#f9d71c',shadow:'#c8a800'},{main:'#c97fff',shadow:'#a855d4'},{main:'#ffe066',shadow:'#d97706'},{main:'#ffffff',shadow:'#f0e8ff'}],ocean:[{main:'#2d8a8a',shadow:'#006064'},{main:'#4dd0e1',shadow:'#00838f'},{main:'#80deea',shadow:'#00acc1'},{main:'#b2ebf2',shadow:'#80deea'},{main:'#e0f7fa',shadow:'#b2ebf2'}],ember:[{main:'#cc2200',shadow:'#8b0000'},{main:'#ff4444',shadow:'#cc2200'},{main:'#ff8800',shadow:'#cc6600'},{main:'#ffbb44',shadow:'#ee9922'},{main:'#ffe8cc',shadow:'#f0d0a0'}],shadow:[{main:'#4a0080',shadow:'#2d004d'},{main:'#7b00cc',shadow:'#4a0080'},{main:'#bb44ff',shadow:'#8b00dd'},{main:'#dd88ff',shadow:'#bb44ff'},{main:'#f0ddff',shadow:'#ddbbff'}],sakura:[{main:'#ffb8c6',shadow:'#e8909a'},{main:'#ff85a2',shadow:'#e8708a'},{main:'#ff477e',shadow:'#cc3355'},{main:'#ffb8c6',shadow:'#e8909a'},{main:'#fff0f4',shadow:'#f0d8e0'}],void:[{main:'#bb44ff',shadow:'#7b00cc'},{main:'#dd88ff',shadow:'#aa44ee'},{main:'#ff44ff',shadow:'#cc00cc'},{main:'#ffaaff',shadow:'#ee88ee'},{main:'#ffffff',shadow:'#f0e0ff'}],cherry:[{main:'#ffb8c6',shadow:'#e8909a'},{main:'#ff85a2',shadow:'#e8708a'},{main:'#ff3366',shadow:'#cc1144'},{main:'#ffb8c6',shadow:'#e8909a'},{main:'#fff0f4',shadow:'#f0d8e0'}],midnight:[{main:'#c0c0ff',shadow:'#8080cc'},{main:'#8888ee',shadow:'#6666cc'},{main:'#aaaaff',shadow:'#8888dd'},{main:'#d0d0ff',shadow:'#b0b0ee'},{main:'#f0f0ff',shadow:'#d8d8f0'}],forest:[{main:'#5a3a1e',shadow:'#3a2010'},{main:'#8b5e3c',shadow:'#5a3a1e'},{main:'#c4a035',shadow:'#8b6914'},{main:'#d4c044',shadow:'#a89922'},{main:'#f0e8c0',shadow:'#d8d0a0'}]};
 var DRESS_HAIR_MAP=['starlight','starlight','starlight','starlight','starlight','ocean','ember','shadow','sakura','void','cherry','midnight','forest'];
+
+// Staff colours — dress-specific
+var STAFF_COLORS = {
+    starlight: { pole:'#fde68a', poleHi:'#fef9c3', orb:'#f9d71c', orbHi:'#ffffff', orbGlow:'rgba(249,214,28,0.4)' },
+    ocean:     { pole:'#4dd0e1', poleHi:'#e0f7fa', orb:'#80deea', orbHi:'#ffffff', orbGlow:'rgba(77,208,225,0.4)' },
+    ember:     { pole:'#ffaa00', poleHi:'#ffe066', orb:'#ff6600', orbHi:'#ffffff', orbGlow:'rgba(255,102,0,0.4)' },
+    shadow:    { pole:'#bb44ff', poleHi:'#dd88ff', orb:'#dd00ff', orbHi:'#ffffff', orbGlow:'rgba(187,68,255,0.4)' },
+    sakura:    { pole:'#ff85a2', poleHi:'#ffd6e0', orb:'#ffb8c6', orbHi:'#ffffff', orbGlow:'rgba(255,133,162,0.4)' },
+    void:      { pole:'#dd88ff', poleHi:'#ffccff', orb:'#ff44ff', orbHi:'#ffffff', orbGlow:'rgba(221,136,255,0.45)' },
+    cherry:    { pole:'#ff85a2', poleHi:'#ffd6e0', orb:'#ffb8c6', orbHi:'#ffffff', orbGlow:'rgba(255,133,162,0.4)' },
+    midnight:  { pole:'#c0c0ff', poleHi:'#e0e0ff', orb:'#aaaaff', orbHi:'#ffffff', orbGlow:'rgba(192,192,255,0.4)' },
+    forest:    { pole:'#c4a035', poleHi:'#d4c044', orb:'#8b6914', orbHi:'#ffe066', orbGlow:'rgba(196,160,53,0.4)' },
+};
+
 var SKIN_TONES={'Light':{base:'#fde8c8',shad:'#f0c8a0'},'Medium':{base:'#e8c0a0',shad:'#d4a080'},'Tan':{base:'#d4a574',shad:'#c09068'},'Brown':{base:'#b8845c',shad:'#a07050'},'Deep':{base:'#8d6e4c',shad:'#7a5c3e'}};
 var EYE_COLORS={'Blue':'#2563eb','Green':'#22c55e','Brown':'#8b5e3c','Purple':'#9333ea','Gold':'#d97706','Silver':'#94a3b8','Pink':'#f472b6'};
 var DRESS_COLLECTION=[{id:'starlight',name:'Starlight',rarity:'common',cost:0,icon:'✨',dressIdx:0,owned:true,desc:'The first light.'},{id:'ocean',name:'Ocean Guardian',rarity:'rare',cost:400,icon:'🌊',dressIdx:5,owned:false,desc:'Deep teal and cyan.'},{id:'ember',name:'Ember Knight',rarity:'rare',cost:400,icon:'🔥',dressIdx:6,owned:false,desc:'Crimson and gold.'},{id:'shadow',name:'Shadow Princess',rarity:'rare',cost:400,icon:'🌑',dressIdx:7,owned:false,desc:'Violet and void.'},{id:'sakura',name:'Sakura Dream',rarity:'rare',cost:500,icon:'🌸',dressIdx:8,owned:false,desc:'Soft pink petals.'},{id:'void',name:'Void Princess',rarity:'legendary',cost:1200,icon:'💜',dressIdx:9,owned:false,desc:'Deep space.'},{id:'cherry',name:'Cherry Blossom',rarity:'seasonal',cost:600,icon:'🌸',dressIdx:10,owned:false,desc:'Spring pink cream.'},{id:'midnight',name:'Midnight Star',rarity:'seasonal',cost:700,icon:'🌙',dressIdx:11,owned:false,desc:'Celestial navy.'},{id:'forest',name:'Forest Witch',rarity:'seasonal',cost:600,icon:'🍂',dressIdx:12,owned:false,desc:'Earthy autumn magic.'}];
 var STAGE_NAMES=['CIVILIAN','PINK NOVICE','VIOLET ADEPT','GOLDEN KNIGHT','ETERNAL PRINCESS'],STAGE_ICONS=['🙍','🌸','💜','⭐','🌙'],STAGE_THRESH=[0,0.2,0.4,0.65,0.85],STAR_DUR=[0,10,18,30,99999];
 var selectedSkin='Light',selectedDressIdx=0,crystals=0,selectedEyeColor='Blue',dailyStreak=0,lastFocusDate='';
 var Store=(function(){var ok=false;try{localStorage.setItem('_rr_test','1');localStorage.removeItem('_rr_test');ok=true;}catch(e){}return{get:function(k){try{return ok?localStorage.getItem(k):null;}catch(e){return null;}},set:function(k,v){try{if(ok)localStorage.setItem(k,v);}catch(e){}}};})();
-function saveProgress(){var data={crystals:crystals,dailyStreak:dailyStreak,lastFocusDate:lastFocusDate,selectedSkin:selectedSkin,selectedDressIdx:selectedDressIdx,selectedEyeColor:selectedEyeColor,dressOwned:DRESS_COLLECTION.map(function(d){return d.owned;})};Store.set('reign-ruin-public',JSON.stringify(data));}
-function loadProgress(){try{var raw=Store.get('reign-ruin-public');if(!raw)return;var data=JSON.parse(raw);crystals=data.crystals||0;dailyStreak=data.dailyStreak||0;lastFocusDate=data.lastFocusDate||'';selectedSkin=data.selectedSkin||'Light';selectedDressIdx=data.selectedDressIdx||0;selectedEyeColor=data.selectedEyeColor||'Blue';if(data.dressOwned)data.dressOwned.forEach(function(o,i){if(DRESS_COLLECTION[i])DRESS_COLLECTION[i].owned=o;});}catch(e){}}
+function saveProgress(){var data={crystals:crystals,dailyStreak:dailyStreak,lastFocusDate:lastFocusDate,selectedSkin:selectedSkin,selectedDressIdx:selectedDressIdx,selectedEyeColor:selectedEyeColor,dressOwned:DRESS_COLLECTION.map(function(d){return d.owned;})};Store.set('reign-ruin-staff',JSON.stringify(data));}
+function loadProgress(){try{var raw=Store.get('reign-ruin-staff');if(!raw)return;var data=JSON.parse(raw);crystals=data.crystals||0;dailyStreak=data.dailyStreak||0;lastFocusDate=data.lastFocusDate||'';selectedSkin=data.selectedSkin||'Light';selectedDressIdx=data.selectedDressIdx||0;selectedEyeColor=data.selectedEyeColor||'Blue';if(data.dressOwned)data.dressOwned.forEach(function(o,i){if(DRESS_COLLECTION[i])DRESS_COLLECTION[i].owned=o;});}catch(e){}}
 
 function drawPrincess(canvas,stage,kaijuMode,bobOffset,dressOverride){
   bobOffset=bobOffset||0;var dressData=DRESS[dressOverride!==undefined?dressOverride:DRESS_COLLECTION[selectedDressIdx].dressIdx];var d=dressData||DRESS[Math.min(stage,4)];var ctx=canvas.getContext('2d');var W=canvas.width,H=canvas.height;ctx.clearRect(0,0,W,H);ctx.imageSmoothingEnabled=false;var p=W/32;var BOB=[0,-1,-2,-1][bobOffset%4];
   function px(x,y,c,w,h){if(!c)return;ctx.fillStyle=c;ctx.fillRect(x*p,(y+BOB)*p,(w||1)*p,(h||1)*p);}
   var tone=SKIN_TONES[selectedSkin]||SKIN_TONES['Light'];var skin=tone.base,skinSha=tone.shad;var eyeColor=EYE_COLORS[selectedEyeColor]||'#2563eb';var eye=kaijuMode?'#ff2020':eyeColor;var lip='#ff7a9a';
   var hairKey=DRESS_HAIR_MAP[dressOverride!==undefined?dressOverride:DRESS_COLLECTION[selectedDressIdx].dressIdx]||'starlight';var hairProg=HAIR_PROGRESSIONS[hairKey]||HAIR_PROGRESSIONS['starlight'];var hc=hairProg[Math.min(stage,4)];
+  var staffKey=DRESS_HAIR_MAP[dressOverride!==undefined?dressOverride:DRESS_COLLECTION[selectedDressIdx].dressIdx]||'starlight';var sc=STAFF_COLORS[staffKey]||STAFF_COLORS['starlight'];
+
+  // Hair glow aura
   if(stage>=4){var glowGrad=ctx.createRadialGradient(16*p,10*p,2*p,16*p,10*p,22*p);glowGrad.addColorStop(0,hc.main+'44');glowGrad.addColorStop(1,'transparent');ctx.fillStyle=glowGrad;ctx.fillRect(0,0,W,H);}
+
+  // Twin tails
   px(8,1,hc.main,4,6);px(20,1,hc.main,4,6);px(9,0,hc.main,2,1);px(21,0,hc.main,2,1);px(7,2,hc.main,1,3);px(24,2,hc.main,1,3);px(9,1,hc.shadow,1,1);px(21,1,hc.shadow,1,1);
   if(stage>=1){px(10,1,'#ffffff',1,1);px(22,1,'#ffffff',1,1);}
   px(8,5,skin,16,9);px(9,4,skin,14,1);px(10,3,skin,12,1);px(9,14,skin,14,1);px(9,4,hc.main,14,3);px(10,3,hc.main,12,1);px(8,5,hc.main,1,5);px(23,5,hc.main,1,5);
@@ -327,13 +346,39 @@ function drawPrincess(canvas,stage,kaijuMode,bobOffset,dressOverride){
   if(kaijuMode){px(11,8,'#ff2020',3,2);px(18,8,'#ff2020',3,2);px(12,8,'#ff6060',1,1);px(19,8,'#ff6060',1,1);}
   if(!kaijuMode){px(10,11,'rgba(255,140,140,0.45)',2,1);px(20,11,'rgba(255,140,140,0.45)',2,1);}
   px(16,11,'rgba(200,120,100,0.4)',1,1);px(14,12,lip,4,1);px(15,13,lip,2,1);if(kaijuMode){px(13,15,'#cc0000',3,1);px(15,15,'#fff',1,1);px(17,15,'#fff',1,1);}px(10,14,skinSha,12,1);
-  px(15,16,skin,2,2);px(15,16,skinSha,1,2);px(12,18,d.collar,8,1);px(13,18,'#fff',2,1);px(12,18,d.bodice,8,6);px(12,18,d.bodiceHi,2,4);px(19,19,d.bodice,1,3);px(12,23,'rgba(0,0,0,0.2)',8,1);px(14,19,d.bow,4,2);px(15,18,d.bow,2,1);px(15,21,d.bow,2,1);px(15,19,d.bowHi,1,1);px(9,18,skin,3,6);px(20,18,skin,3,6);px(9,19,skinSha,1,4);px(22,19,skinSha,1,4);
+  px(15,16,skin,2,2);px(15,16,skinSha,1,2);px(12,18,d.collar,8,1);px(13,18,'#fff',2,1);
+  px(12,18,d.bodice,8,6);px(12,18,d.bodiceHi,2,4);px(19,19,d.bodice,1,3);px(12,23,'rgba(0,0,0,0.2)',8,1);px(14,19,d.bow,4,2);px(15,18,d.bow,2,1);px(15,21,d.bow,2,1);px(15,19,d.bowHi,1,1);px(9,18,skin,3,6);px(20,18,skin,3,6);px(9,19,skinSha,1,4);px(22,19,skinSha,1,4);
   if(stage>=2&&d.gloves){px(9,22,d.gloves,3,3);px(20,22,d.gloves,3,3);px(9,22,d.glovesCuff,3,1);px(20,22,d.glovesCuff,3,1);}
   var st=[8,10,12,15,18][Math.min(stage,4)],sb=[10,13,16,20,24][Math.min(stage,4)],sh=[6,8,10,12,14][Math.min(stage,4)],cx=16;for(var r=0;r<sh;r++){var pr=r/(sh-1||1),rw=Math.round(st+(sb-st)*pr),rx=cx-Math.floor(rw/2);px(rx,24+r,d.skirt,rw,1);px(rx,24+r,d.skirtHi,2,1);}
   if(stage>=3&&d.skirtShimmer){for(var sr=1;sr<sh-1;sr++){var sp=sr/(sh-1),sw=Math.round(st+(sb-st)*sp),sx=cx-Math.floor(sw/2);ctx.fillStyle=d.skirtShimmer;ctx.fillRect((sx+sw-3)*p,(24+sr+BOB)*p,2*p,p);}}
   var hw=sb,hx=cx-Math.floor(hw/2);px(hx,24+sh-1,'rgba(0,0,0,0.15)',hw,1);var ly=24+sh;px(14,ly,skin,2,4);px(18,ly,skin,2,4);px(14,ly,skinSha,1,3);px(19,ly,skinSha,1,3);
   var by=ly+3;px(13,by,d.boots,4,2);px(13,by,d.bootsHi,1,1);px(16,by,d.boots,1,1);px(17,by,d.boots,4,2);px(17,by,d.bootsHi,1,1);px(20,by,d.boots,1,1);
-  var wands=['🪄','🪄','⚡','🌟','✨'];ctx.font=(p*3.2)+'px serif';ctx.fillText(wands[Math.min(stage,4)],22*p,(18+(stage>=3?-1:0))*p);
+
+  // ══ PIXEL-DRAWN STAFF — replaces emoji wand ══
+  // Staff pole — lengthens per stage
+  var staffLen = [0, 14, 18, 22, 26][Math.min(stage,4)];
+  if (staffLen > 0) {
+    // Pole
+    ctx.fillStyle = sc.pole;
+    ctx.fillRect(29*p, 9*p, 2*p, staffLen*p);
+    ctx.fillStyle = sc.poleHi;
+    ctx.fillRect(29*p, 9*p, 1*p, staffLen*p);
+    // Orb — grows slightly per stage
+    var orbSize = [0, 3, 4, 5, 6][Math.min(stage,4)];
+    var orbX = 29 - Math.floor(orbSize/2);
+    var orbY = 8 - Math.floor(orbSize/2);
+    ctx.fillStyle = sc.orb;
+    ctx.fillRect(orbX*p, orbY*p, orbSize*p, orbSize*p);
+    ctx.fillStyle = sc.orbHi;
+    ctx.fillRect((orbX+1)*p, (orbY+1)*p, Math.max(1,orbSize-2)*p, Math.max(1,orbSize-2)*p);
+    // Orb glow
+    var orbGlow = ctx.createRadialGradient(30*p, 8*p, 1*p, 30*p, 8*p, 7*p);
+    orbGlow.addColorStop(0, sc.orbGlow);
+    orbGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = orbGlow;
+    ctx.fillRect(24*p, 1*p, 12*p, 14*p);
+  }
+
   if(d.glow){var g=ctx.createRadialGradient(W/2,H*0.38,0,W/2,H*0.38,W*0.75);g.addColorStop(0,d.glow);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
   if(kaijuMode){ctx.fillStyle='rgba(180,0,30,0.15)';ctx.fillRect(0,0,W,H);var au=ctx.createRadialGradient(W/2,H/2,W*0.25,W/2,H/2,W*0.6);au.addColorStop(0,'transparent');au.addColorStop(1,'rgba(255,0,50,0.18)');ctx.fillStyle=au;ctx.fillRect(0,0,W,H);}
 }
@@ -394,27 +439,7 @@ function updateSpecialMeter(){$specialFill.style.width=specialCharge+'%';if(spec
 function supremeAnnihilation(){if(specialCharge<100)return;specialCharge=0;updateSpecialMeter();var W=$scene.clientWidth,H=$scene.clientHeight;for(var i=0;i<6;i++){(function(j){setTimeout(function(){createExplosion(60+Math.random()*(W-120),50+Math.random()*(H-160),100+Math.random()*50,true);},j*130);})(i);}setTimeout(function(){createExplosion(W/2,H/2,200,true);},520);flash('rgba(255,215,0,0.3)');$phase.textContent='💎 SUPREME ANNIHILATION! 💎';earnCrystals(25);}
 function onSceneClick(e){if(!rampageActive)return;var rect=$scene.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;var radius=starPowerActive?120+Math.random()*40:80+Math.random()*40;createExplosion(x,y,radius,false);}
 function startStarPower(stage){var dur=STAR_DUR[Math.min(stage,4)];starPowerLeft=dur;starPowerActive=dur>0;$spWrap.style.display=dur>0?'block':'none';if(!starPowerActive)return;$scene.classList.add('star-active');$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$spFill.style.background='linear-gradient(90deg,var(--gold),var(--rose),var(--lav))';if(dur===99999){$spLabel.textContent='∞ ETERNAL';$spFill.style.width='100%';return;}$spLabel.textContent=dur+'s';$spFill.style.width='100%';clearInterval(starInterval);starInterval=setInterval(function(){starPowerLeft--;$spFill.style.width=Math.max(0,(starPowerLeft/dur)*100)+'%';$spLabel.textContent=starPowerLeft+'s';if(starPowerLeft<=0){starPowerActive=false;clearInterval(starInterval);$scene.classList.remove('star-active');$spLabel.textContent='EXPIRED';$spFill.style.background='rgba(255,255,255,0.15)';$phase.textContent='💥 DESTROY THE CITY! 💥';}},1000);}
-function tick(){
-    if(!timerEndTime) return;
-    var now=Date.now();
-    var remaining=Math.max(0,Math.ceil((timerEndTime-now)/1000));
-    if(remaining!==timeLeft){
-        timeLeft=remaining;
-        updateTimerDisplay();
-        updateMeter();
-        if(!isBreak&&timeLeft>0){
-            var prog=(FOCUS_SEC-timeLeft)/FOCUS_SEC,newStage=0;
-            STAGE_THRESH.forEach(function(t,i){if(prog>=t)newStage=i;});
-            if(newStage!==curStage){curStage=newStage;renderPrincess(curStage,false);updateBanner(curStage);doTransformBurst();}
-            updateStageCards(curStage,prog);
-        }
-    }
-    if(timeLeft<=0){
-        clearInterval(intervalId);timerEndTime=null;isRunning=false;
-        if(!isBreak){curStage=4;renderPrincess(curStage,false);updateBanner(curStage);updateStageCards(curStage,1);$phase.textContent='🌟 POWER AT MAXIMUM — UNLEASH! 🌟';$meterText.textContent='💖 FULL POWER ACHIEVED!';$btnRamp.classList.remove('hidden');$btnHen.classList.add('hidden');awardFocusCrystals();var sr=$scene.getBoundingClientRect();for(var i=0;i<22;i++){(function(j){setTimeout(function(){addSparkle(sr.width/2,sr.height*0.45,['🌟','💖','✨','🎀','💕','⭐'][j%6]);},j*45);})(i);}}else{endRampage();}
-        updateTimerDisplay();updateMeter();
-    }
-}
+function tick(){if(!timerEndTime)return;var now=Date.now();var remaining=Math.max(0,Math.ceil((timerEndTime-now)/1000));if(remaining!==timeLeft){timeLeft=remaining;updateTimerDisplay();updateMeter();if(!isBreak&&timeLeft>0){var prog=(FOCUS_SEC-timeLeft)/FOCUS_SEC,newStage=0;STAGE_THRESH.forEach(function(t,i){if(prog>=t)newStage=i;});if(newStage!==curStage){curStage=newStage;renderPrincess(curStage,false);updateBanner(curStage);doTransformBurst();}updateStageCards(curStage,prog);}}if(timeLeft<=0){clearInterval(intervalId);timerEndTime=null;isRunning=false;if(!isBreak){curStage=4;renderPrincess(curStage,false);updateBanner(curStage);updateStageCards(curStage,1);$phase.textContent='🌟 POWER AT MAXIMUM — UNLEASH! 🌟';$meterText.textContent='💖 FULL POWER ACHIEVED!';$btnRamp.classList.remove('hidden');$btnHen.classList.add('hidden');awardFocusCrystals();var sr=$scene.getBoundingClientRect();for(var i=0;i<22;i++){(function(j){setTimeout(function(){addSparkle(sr.width/2,sr.height*0.45,['🌟','💖','✨','🎀','💕','⭐'][j%6]);},j*45);})(i);}}else{endRampage();}updateTimerDisplay();updateMeter();}}
 function _teardownRampage(){clearInterval(starInterval);starPowerActive=false;stopScrollLoop();$scene.removeEventListener('click',onSceneClick);clearCity();if(comboTimer)clearTimeout(comboTimer);comboCount=0;scrollSpeed=0.5;nextSpawnX=0;lastScrollTs=0;timerEndTime=null;}
 function startFocus(){rampageActive=false;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=false;curStage=0;timeLeft=FOCUS_SEC;timerEndTime=Date.now()+(timeLeft*1000);$phase.textContent='🌙 CHARGING LOVE & JUSTICE';$btnHen.classList.add('hidden');$btnRamp.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialWrap.style.display='none';$spWrap.style.display='none';$meterWrap.style.display='block';$stagesWrap.style.display='block';$comboText.textContent='';$scene.classList.remove('rampage-mode','star-active');$mc.style.opacity='1';$pWrap.style.display='flex';$kaijuWrap.classList.remove('show');$groundStrip.style.display='none';$rampMoon.style.display='none';$destInfo.textContent='🏙️ Town intact';buildStageCards();renderPrincess(0,false);updateBanner(0);updateTimerDisplay();updateMeter();updateStageCards(0,0);intervalId=setInterval(tick,250);}
 function startRampage(){rampageActive=true;_teardownRampage();clearInterval(intervalId);isRunning=true;isBreak=true;timeLeft=BREAK_SEC;timerEndTime=Date.now()+(timeLeft*1000);score=0;specialCharge=0;totalDestroyed=0;$scoreEl.textContent='0';$comboText.textContent='';$phase.textContent='⭐ STAR POWER! INVINCIBLE! ⭐';$btnRamp.classList.add('hidden');$btnHen.classList.add('hidden');$btnSpecial.classList.add('hidden');$specialReady.classList.remove('show');$meterWrap.style.display='none';$stagesWrap.style.display='none';$specialWrap.style.display='block';$specialFill.style.width='0%';$scene.classList.add('rampage-mode');$mc.style.opacity='0.1';$pWrap.style.display='none';$kaijuWrap.classList.add('show');$groundStrip.style.display='block';$rampMoon.style.display='block';renderKaiju(curStage);spawnInitialCity();startScrollLoop();$scene.addEventListener('click',onSceneClick);startStarPower(curStage);updateTimerDisplay();updateMeter();$destInfo.textContent='🏙️ Speed: 0.5x | Destroyed: 0';intervalId=setInterval(tick,250);setTimeout(function(){var W=$scene.clientWidth,H=$scene.clientHeight;createExplosion(W*0.3,H*0.6,100,false);createExplosion(W*0.7,H*0.5,90,false);},500);}
